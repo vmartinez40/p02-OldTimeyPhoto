@@ -13,7 +13,7 @@ Due:10/16/17
 */
 
 #include<iostream>
-#include<vectors>
+#include<vector>
 #include<string>
 #include"bitmap.h"
 
@@ -21,6 +21,24 @@ using namespace std;
 
 int main()
 {
+    //Initialize image height and width
+    int imageHeight,imageWidth;
+    
+    // Read and convert image to pixels
+    Bitmap image;
+    vector <vector <Pixel> > bmp;
+    Pixel rgb;
+    
+    // Opens image
+    image.open("machupicchu.bmp");
+    bmp = image.toPixelMatrix();
+    cout<<"machupicchu.bmp has been loaded"<<endl;
+
+    // Get values of height and width of image
+    imageHeight = bmp.size(); //height?
+    imageWidth = bmp[0].size(); //width
+    cout<<"HEIGHT = "<<imageWidth<<endl;
+    cout<<"WIDTH = "<<imageHeight<<endl;
 
 //Ask user for file name
 
