@@ -21,16 +21,23 @@ using namespace std;
 
 int main()
 {
+
     //Initialize image height and width
     int imageHeight,imageWidth;
-    
+    string filename;   
     // Read and convert image to pixels
     Bitmap image;
     vector <vector <Pixel> > bmp;
     Pixel rgb;
+
+    //Ask user for file name
+    cout<<"Please enter your file name that you want to turn OLd Timey!"<<endl;
+    cin>>filename;
+
+    //Store users file
     
     // Opens image
-    image.open("machupicchu.bmp");
+    image.open(filename);
     bmp = image.toPixelMatrix();
     cout<<"machupicchu.bmp has been loaded"<<endl;
 
@@ -40,9 +47,17 @@ int main()
     cout<<"HEIGHT = "<<imageWidth<<endl;
     cout<<"WIDTH = "<<imageHeight<<endl;
 
-//Ask user for file name
+    //Goes thorugh all the pixels
+    for(int r=0; r<bmp.size(); r++)
+    {
+        for(int c=0; c<bmp[r].size(); c++)
+        {
+            rgb = bmp [r][c];
+            //convert to b/w
+            bmp[r][c]=rgb;
+        }
+    }
 
-//Store users file name 
 
     return 0;
 }
