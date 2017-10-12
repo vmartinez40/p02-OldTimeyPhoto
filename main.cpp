@@ -21,43 +21,48 @@ using namespace std;
 
 int main()
 {
-
-    //Initialize image height and width
-    int imageHeight,imageWidth;
-    string filename;   
-    // Read and convert image to pixels
+    //Initialize image variables
     Bitmap image;
-    vector <vector <Pixel> > bmp;
     Pixel rgb;
+    vector <vector <Pixel> > bmp;
+    string filename;
+    
 
     //Ask user for file name
     cout<<"Please enter your file name that you want to turn OLd Timey!"<<endl;
     cin>>filename;
-
-    //Store users file
     
     // Opens image
     image.open(filename);
     bmp = image.toPixelMatrix();
-    cout<<"machupicchu.bmp has been loaded"<<endl;
+    cout<<filename<<".bmp has been loaded"<<endl;
+    
+    //Check if file is in a bmp format
+    bool validBmp = image.isImage();
 
-    // Get values of height and width of image
-    imageHeight = bmp.size(); //height?
-    imageWidth = bmp[0].size(); //width
-    cout<<"HEIGHT = "<<imageWidth<<endl;
-    cout<<"WIDTH = "<<imageHeight<<endl;
-
-    //Goes thorugh all the pixels
-    for(int r=0; r<bmp.size(); r++)
+    while(validBmp == true)
     {
-        for(int c=0; c<bmp[r].size(); c++)
+    //Goes thorugh all the pixels and converts to greyscale
+        for(int r=0; r<bmp.size(); r++)
         {
-            rgb = bmp [r][c];
-            //convert to b/w
-            bmp[r][c]=rgb;
+            for(int c = 0; c < bmp[0].size(); r++)
+            {          
+                int avg = (rgb.red+rgb.green+rgb.blue)/3;
+                rgb.red = avg;
+                rgb.green = avg;
+                rgb.blue = avg;
+            }
         }
     }
-
-
+    while(validBmp == false)
+    {
+        cout<<"The file is not in the correct format. Please make sure it is a BMP file."<<endl;
+        main();
+    }
+    
+    //Save the file as oldtimey.bmp
+    image.fromPixelMatrix(bmp);
+    image.save("OldTimeyPhoto.bmp");
+    cout<<"Your image was turned OldTimey"<<endl;
     return 0;
 }
