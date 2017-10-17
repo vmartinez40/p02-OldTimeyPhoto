@@ -8,8 +8,8 @@ Program Requirements:
 
 CSCI 111
 Kevin Buffardi
-Last Edited: 10/2/17
-Due:10/16/17
+Last Edited: 10/13/17
+Due Date:10/16/17
 */
 
 #include<iostream>
@@ -26,6 +26,7 @@ int main()
     Pixel rgb;
     vector <vector <Pixel> > bmp;
     string filename;
+    int imageHeight, imageWidth;
     
 
     //Ask user for file name
@@ -35,34 +36,39 @@ int main()
     // Opens image
     image.open(filename);
     bmp = image.toPixelMatrix();
-    cout<<filename<<".bmp has been loaded"<<endl;
+    cout<<filename<<" has been loaded"<<endl;
+
+    //Check values for image H/W
+    imageHeight = bmp.size();
+    imageWidth = bmp[0].size();
+    cout<<"Your image is "<<imageHeight<<" pixels high and "<<imageWidth<<" pixels wide!"<<endl;
     
     //Check if file is in a bmp format
     bool validBmp = image.isImage();
-
-    while(validBmp == true)
-    {
-    //Goes thorugh all the pixels and converts to greyscale
-        for(int r=0; r<bmp.size(); r++)
-        {
-            for(int c = 0; c < bmp[0].size(); r++)
-            {          
-                int avg = (rgb.red+rgb.green+rgb.blue)/3;
-                rgb.red = avg;
-                rgb.green = avg;
-                rgb.blue = avg;
-            }
-        }
-    }
     while(validBmp == false)
     {
         cout<<"The file is not in the correct format. Please make sure it is a BMP file."<<endl;
         main();
     }
-    
-    //Save the file as oldtimey.bmp
-    image.fromPixelMatrix(bmp);
-    image.save("OldTimeyPhoto.bmp");
-    cout<<"Your image was turned OldTimey"<<endl;
-    return 0;
+    while(validBmp == true)
+    {
+    //Goes thorugh all the pixels and converts to greyscale
+        for(int r = 0; r < bmp.size(); r++)
+        {
+            for(int c = 0; c < bmp[r].size(); c++)
+            {          
+                int avg = (rgb.red + rgb.green + rgb.blue)/3;
+                rgb.red = avg;
+                rgb.green = avg;
+                rgb.blue = avg;
+                bmp[r][c] = rgb;
+            }
+        }
+        //Save the file as oldtimey.bmp
+        image.fromPixelMatrix(bmp);
+        image.save("OldTimeyPhoto.bmp");
+        cout<<"Your image was turned OldTimey"<<endl;
+        validBmp = false;
+    }
+    return 0;   
 }
