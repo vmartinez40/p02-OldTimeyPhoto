@@ -56,7 +56,8 @@ int main()
         for(int r = 0; r < bmp.size(); r++)
         {
             for(int c = 0; c < bmp[r].size(); c++)
-            {          
+            {   
+                rgb = bmp[r][c];
                 int avg = (rgb.red + rgb.green + rgb.blue)/3;
                 rgb.red = avg;
                 rgb.green = avg;
