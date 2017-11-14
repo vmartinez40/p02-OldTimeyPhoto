@@ -30,11 +30,25 @@ int main()
     
 
     //Ask user for file name
-    cout<<"Please enter your file name that you want to turn OLd Timey!"<<endl;
-    cin>>filename;
+    bool validBmp = false;
+    while (validBmp == false)
+    {
+        cout<<"Please enter your file name that you want to turn OLd Timey!"<<endl;
+        cin>>filename;
     
-    // Opens image
-    image.open(filename);
+        // Opens image
+        image.open(filename);
+
+        //Check if file is in a bmp format
+        validBmp = image.isImage();
+        if (validBmp == false)
+        {
+            cout<<"The file is not in the correct format. Please make sure it is a BMP file."<<endl;
+        
+        }
+        else validBmp = true;
+    }
+
     bmp = image.toPixelMatrix();
     cout<<filename<<" has been loaded"<<endl;
 
@@ -43,15 +57,6 @@ int main()
     imageWidth = bmp[0].size();
     cout<<"Your image is "<<imageHeight<<" pixels high and "<<imageWidth<<" pixels wide!"<<endl;
     
-    //Check if file is in a bmp format
-    bool validBmp = image.isImage();
-    while(validBmp == false)
-    {
-        cout<<"The file is not in the correct format. Please make sure it is a BMP file."<<endl;
-        main();
-    }
-    while(validBmp == true)
-    {
     //Goes thorugh all the pixels and converts to greyscale
         for(int r = 0; r < bmp.size(); r++)
         {
@@ -69,7 +74,6 @@ int main()
         image.fromPixelMatrix(bmp);
         image.save("OldTimeyPhoto.bmp");
         cout<<"Your image was turned OldTimey"<<endl;
-        validBmp = false;
-    }
+    
     return 0;   
 }
